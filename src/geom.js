@@ -212,8 +212,15 @@ const computeBottomGeometry = ({
   }
 
   if (tooltipOrigin.x + contentSize.width > maxWidth) {
-    tooltipOrigin.x =
+
+    const horDiff = anchorPoint.x - displayInsets.left - adjustedContentSize.width
+    // Repositioning according to the anchor, when anchor is out of rightmost from the tooltip.
+    if (horDiff >= 0) {
+      tooltipOrigin.x = anchorPoint.x + arrowSize.width - adjustedContentSize.width
+    } else {
+      tooltipOrigin.x =
       displayInsets.left + (maxWidth - adjustedContentSize.width) / 2;
+    }
   }
 
   return {
